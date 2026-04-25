@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { User, _MCAProfile, _EmployerProfile, _AdminProfile } from '../types';
+import type { User } from '../types';
 
 interface AuthState {
   user: User | null;
