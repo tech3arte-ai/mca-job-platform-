@@ -27,8 +27,26 @@ export const Register: React.FC = () => {
     e.preventDefault();
     setError('');
 
+    // Validation: Check password match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      return;
+    }
+
+    // Validation: Minimum password length
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
+    // Validation: Required fields based on role
+    if (role === 'MCA' && !formData.phone) {
+      setError('Phone number is required for MCA applicants');
+      return;
+    }
+
+    if (role === 'EMPLOYER' && !formData.companyName) {
+      setError('Company name is required for employers');
       return;
     }
 
@@ -50,10 +68,13 @@ export const Register: React.FC = () => {
       await authAPI.register(registerData);
       
       // Redirect to payment page after registration
+      // MCA: 50 GHS registration fee
+      // Employer/Pharmacy: Free registration
       navigate('/payment', { 
         state: { 
           role, 
-          amount: role === 'MCA' ? 100 : 500 // GHS amounts
+          amount: role === 'MCA' ? 50 : 0, // Updated payment structure
+          description: role === 'MCA' ? 'MCA Registration Fee' : 'Pharmacy Registration (Free)'
         } 
       });
     } catch (err: any) {
@@ -138,6 +159,7 @@ export const Register: React.FC = () => {
               placeholder="+233 XX XXX XXXX"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              required
             />
           ) : (
             <>
@@ -198,10 +220,10 @@ export const Register: React.FC = () => {
           <div className="bg-blue-50 p-3 rounded-lg">
             <p className="text-sm text-blue-800">
               <strong>Registration Fee:</strong>{' '}
-              {role === 'MCA' ? 'GHS 100' : 'GHS 500'}
+              {role === 'MCA' ? 'GHS 50.00' : 'FREE'}
             </p>
             <p className="text-xs text-blue-600 mt-1">
-              Payment required before account activation
+              {role === 'MCA' ? 'Payment required before account activation' : 'Pharmacy registration is now free!'}
             </p>
           </div>
 

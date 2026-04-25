@@ -5,6 +5,7 @@ import './index.css'
 import { Landing } from './pages/Landing'
 import { Login } from './pages/auth/Login'
 import { Register } from './pages/auth/Register'
+import { Payment } from './pages/auth/Payment'
 import { MCADashboard } from './pages/mca/Dashboard'
 import { EmployerDashboard } from './pages/employer/Dashboard'
 import { AdminDashboard } from './pages/admin/Dashboard'
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/jobs" element={<JobListings />} />
         
         {/* MCA Routes */}
