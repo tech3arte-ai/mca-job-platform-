@@ -1,0 +1,33 @@
+name: Deploy mca-job-platform-
+
+# Trigger the workflow every time you push to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # This MUST match the environment name you created in GitHub Settings
+    environment: production 
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        # This creates the optimized 'dist' folder for your pharmacy app
+        run: npm run build
+
+      - name: Admin Approval Notification
+        # This message will appear in your GitHub Actions logs
+        run: echo "Build successful. Waiting for Admin (Abankwah4543) to approve the medical platform release..."
