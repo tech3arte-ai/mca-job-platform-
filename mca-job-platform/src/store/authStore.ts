@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User, MCAProfile, EmployerProfile, AdminProfile } from '../types';
+// Use 'import type' for anything that is just a TypeScript interface or type
+import type { User, MCAProfile, EmployerProfile, AdminProfile } from '../types';
 
 interface AuthState {
   user: User | null;
